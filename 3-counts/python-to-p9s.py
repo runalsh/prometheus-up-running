@@ -30,7 +30,7 @@ class MyHandler(http.server.BaseHTTPRequestHandler):
         REQUESTS.inc()
         INPROGRESS.inc()
         with EXCEPTIONS.count_exceptions():
-            if random.random() < 0.2:
+            if random.random() < 0.4:
                 raise Exception
         euros = random.random()
         SALES.inc(euros)
