@@ -64,7 +64,7 @@ if __name__ == "__main__":
 
 # # HELP python_gc_objects_collected_total Objects collected during gc
 # # TYPE python_gc_objects_collected_total counter
-# python_gc_objects_collected_total{generation="0"} 249.0
+# python_gc_objects_collected_total{generation="0"} 261.0
 # python_gc_objects_collected_total{generation="1"} 12.0
 # python_gc_objects_collected_total{generation="2"} 0.0
 # # HELP python_gc_objects_uncollectable_total Uncollectable objects found during GC
@@ -74,27 +74,85 @@ if __name__ == "__main__":
 # python_gc_objects_uncollectable_total{generation="2"} 0.0
 # # HELP python_gc_collections_total Number of times this generation was collected
 # # TYPE python_gc_collections_total counter
-# python_gc_collections_total{generation="0"} 33.0
-# python_gc_collections_total{generation="1"} 2.0
+# python_gc_collections_total{generation="0"} 35.0
+# python_gc_collections_total{generation="1"} 3.0
 # python_gc_collections_total{generation="2"} 0.0
 # # HELP python_info Python platform information
 # # TYPE python_info gauge
 # python_info{implementation="CPython",major="3",minor="12",patchlevel="0",version="3.12.0"} 1.0
 # # HELP hello_worlds_total Hello Worlds requested.
 # # TYPE hello_worlds_total counter
-# hello_worlds_total 44.0
+# hello_worlds_total 17.0
 # # HELP hello_worlds_created Hello Worlds requested.
 # # TYPE hello_worlds_created gauge
-# hello_worlds_created 1.7168286785966053e+09
+# hello_worlds_created 1.7168307705074496e+09
 # # HELP hello_world_exceptions_total Exceptions serving Hello World.
 # # TYPE hello_world_exceptions_total counter
-# hello_world_exceptions_total 7.0
+# hello_world_exceptions_total 1.0
 # # HELP hello_world_exceptions_created Exceptions serving Hello World.
 # # TYPE hello_world_exceptions_created gauge
-# hello_world_exceptions_created 1.7168286785966053e+09
+# hello_world_exceptions_created 1.7168307705074496e+09
 # # HELP hello_world_sales_euro_total Euros made serving Hello World.
 # # TYPE hello_world_sales_euro_total counter
-# hello_world_sales_euro_total 19.625549830170876
+# hello_world_sales_euro_total 7.728045048731731
 # # HELP hello_world_sales_euro_created Euros made serving Hello World.
 # # TYPE hello_world_sales_euro_created gauge
-# hello_world_sales_euro_created 1.7168286785966053e+09
+# hello_world_sales_euro_created 1.7168307705074496e+09
+# # HELP hello_worlds_inprogress Number of Hello Worlds in progress.
+# # TYPE hello_worlds_inprogress gauge
+# hello_worlds_inprogress 1.0
+# # HELP hello_world_last_time_seconds The last time a Hello World was served.
+# # TYPE hello_world_last_time_seconds gauge
+# hello_world_last_time_seconds 1.7168307860015633e+09
+# # HELP time_seconds The current time.
+# # TYPE time_seconds gauge
+# time_seconds 1.7168309894232438e+09
+# # HELP hello_world_latency_seconds Time for a request Hello World.
+# # TYPE hello_world_latency_seconds summary
+# hello_world_latency_seconds_count 0.0
+# hello_world_latency_seconds_sum 0.0
+# # HELP hello_world_latency_seconds_created Time for a request Hello World.
+# # TYPE hello_world_latency_seconds_created gauge
+# hello_world_latency_seconds_created 1.7168307705074496e+09
+# # HELP hello_world_latency_histogram_seconds Time for a request Hello World(histogram)
+# # TYPE hello_world_latency_histogram_seconds histogram
+# hello_world_latency_histogram_seconds_bucket{le="0.005"} 0.0
+# hello_world_latency_histogram_seconds_bucket{le="0.01"} 0.0
+# hello_world_latency_histogram_seconds_bucket{le="0.025"} 0.0
+# hello_world_latency_histogram_seconds_bucket{le="0.05"} 0.0
+# hello_world_latency_histogram_seconds_bucket{le="0.075"} 0.0
+# hello_world_latency_histogram_seconds_bucket{le="0.1"} 0.0
+# hello_world_latency_histogram_seconds_bucket{le="0.25"} 0.0
+# hello_world_latency_histogram_seconds_bucket{le="0.5"} 0.0
+# hello_world_latency_histogram_seconds_bucket{le="0.75"} 0.0
+# hello_world_latency_histogram_seconds_bucket{le="1.0"} 0.0
+# hello_world_latency_histogram_seconds_bucket{le="2.5"} 0.0
+# hello_world_latency_histogram_seconds_bucket{le="5.0"} 0.0
+# hello_world_latency_histogram_seconds_bucket{le="7.5"} 0.0
+# hello_world_latency_histogram_seconds_bucket{le="10.0"} 0.0
+# hello_world_latency_histogram_seconds_bucket{le="+Inf"} 0.0
+# hello_world_latency_histogram_seconds_count 0.0
+# hello_world_latency_histogram_seconds_sum 0.0
+# # HELP hello_world_latency_histogram_seconds_created Time for a request Hello World(histogram)
+# # TYPE hello_world_latency_histogram_seconds_created gauge
+# hello_world_latency_histogram_seconds_created 1.7168307705074496e+09
+# # HELP hello_world_latency_histogram_bucket_seconds Time for a request Hello World(histogram+bucket)
+# # TYPE hello_world_latency_histogram_bucket_seconds histogram
+# hello_world_latency_histogram_bucket_seconds_bucket{le="0.0001"} 0.0
+# hello_world_latency_histogram_bucket_seconds_bucket{le="0.0002"} 0.0
+# hello_world_latency_histogram_bucket_seconds_bucket{le="0.0005"} 0.0
+# hello_world_latency_histogram_bucket_seconds_bucket{le="0.001"} 0.0
+# hello_world_latency_histogram_bucket_seconds_bucket{le="0.01"} 0.0
+# hello_world_latency_histogram_bucket_seconds_bucket{le="0.1"} 0.0
+# hello_world_latency_histogram_bucket_seconds_bucket{le="+Inf"} 0.0
+# hello_world_latency_histogram_bucket_seconds_count 0.0
+# hello_world_latency_histogram_bucket_seconds_sum 0.0
+# # HELP hello_world_latency_histogram_bucket_seconds_created Time for a request Hello World(histogram+bucket)
+# # TYPE hello_world_latency_histogram_bucket_seconds_created gauge
+# hello_world_latency_histogram_bucket_seconds_created 1.7168307705074496e+09
+# # HELP foos_total The number of foo calls.
+# # TYPE foos_total counter
+# foos_total 0.0
+# # HELP foos_created The number of foo calls.
+# # TYPE foos_created gauge
+# foos_created 1.7168307705074496e+09
