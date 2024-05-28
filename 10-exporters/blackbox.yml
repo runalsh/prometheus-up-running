@@ -1,0 +1,61 @@
+prober: icmp
+  http:
+    ip_protocol_fallback: true
+    follow_redirects: true
+    enable_http2: true
+tcp:
+    ip_protocol_fallback: true true
+icmp:
+    ip_protocol_fallback: true
+    ttl: 64
+dns:
+    ip_protocol_fallback: true
+    recursion_desired: true
+
+tcp_connect:
+  prober: tcp
+
+ssh_banner:
+  prober: tcp
+  tcp:
+    query_response:
+    - expect: "^SSH-2.0-"
+
+tcp_connect_tls:
+  prober: tcp
+  tcp:
+    tls: true
+
+http_200_ssl_prometheus:
+  prober: http
+  http:
+    valid_status_codes: [200]
+    fail_if_not_ssl: true
+    fail_if_not_matches_regexp:
+    -  oreillymedia
+
+dns_tcp:
+  prober: dns
+  dns:
+    transport_protocol: "tcp"
+    query_name: "www.prometheus.io"
+
+dns_mx_present_rp_io:
+  prober: dns
+  dns:
+    query_name: "prometheus.io"
+    query_type: "MX"
+    validate_answer_rrs:
+        fail_if_not_matches_regexp:
+        - ".+"
+
+
+
+
+
+
+
+
+
+
+

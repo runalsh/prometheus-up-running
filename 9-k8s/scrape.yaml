@@ -1,0 +1,82 @@
+scrape_configs:
+- job_name: kubelet
+  kubernetes_sd_configs:
+  - role: node
+  scheme: https
+  tls_config:
+    ca_file: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+    insecure_skip_verify: true
+  authorization:
+    credentials_file: /var/run/secrets/kubernetes.io/serviceaccount/token
+
+- job_name: cadvisor
+  kubernetes_sd_configs:
+  - role: node
+  scheme: https
+  tls_config:
+    ca_file: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+  insecure_skip_verify: true
+  authorization:
+    credentials_file: /var/run/secrets/kubernetes.io/serviceaccount/token
+  metrics_path: /metrics/cadvisor
+
+- job_name: k8apiserver
+  kubernetes_sd_configs:
+  - role: endpointslice
+  scheme: https
+  tls_config:
+    ca_file: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+    insecure_skip_verify: true
+  authorization:
+    credentials_file: /var/run/secrets/kubernetes.io/serviceaccount/token
+  relabel_configs:
+  - source_labels:
+    - __meta_kubernetes_namespace
+    - __meta_kubernetes_service_name
+    - __meta_kubernetes_endpoint_port_name
+    action: keep
+    regex: default;kubernetes;https
+
+  - job_name: k8services
+    kubernetes_sd_configs:
+    - role: endpointslice
+    relabel_configs:
+    - source_labels:
+      - __meta_kubernetes_namespace
+      - __meta_kubernetes_service_name
+      regex: default;kubernetes
+    - source_labels:
+      - __meta_kubernetes_namespace
+      regex: default
+      action: keep
+    - source_labels: [__meta_kubernetes_service_name]
+      target_label: job
+
+  - job_name: k8services_annotations
+    kubernetes_sd_configs:
+    - role: endpointslice
+    relabel_configs:
+    - source_labels: [__meta_kubernetes_service_annotation_prometheus_io_scheme]
+      regex: (.+)
+      target_label: __scheme__
+    - source_labels: [__meta_kubernetes_service_annotation_prometheus_io_path]
+      regex: (.+)
+      target_label: __metrics_path__
+    - source_labels:
+      - __address__
+      - __meta_kubernetes_service_annotation_prometheus_io_port_name
+      regex: ([^:]+)(:\d+)?;(\d+)
+      replacement: ${1}:${3}
+      target_label: __address__,__metrics_port__
+
+  - job_name: k8pods
+    kubernetes_sd_configs:
+    - role: pod
+    relabel_configs:
+    - source_labels: [__meta_kubernetes_pod_container_port_name]
+      regex: metrics
+      action: keep
+    - source_labels: [__meta_kubernetes_pod_container_name]
+      target_label: job
+
+

@@ -1,0 +1,95 @@
+scrape_configs:
+  - job_name: prometheus
+    static_configs:
+    - targets:
+      - localhost:9090
+    relabel_configs:
+    - source_labels: [job, team]
+      regex: prometheus;monitoring
+      action: drop  
+  - job_name: node_ansible
+    static_configs:
+    - targets:
+{% for host in groups["all"] %}
+      - {{ host }}:9100
+{% endfor %}    
+  - job_name: node_static
+    static_configs:
+    - targets: static1
+      - host1:9100
+    labels:
+      datacenter: paris
+    - targets: static2
+      - host2:9100
+      - host3:9100
+    labels:
+      datacenter: montreal-paris
+    relabel_configs:
+    - source_labels: [team]
+      regex: infra|monitoring
+      action: keep  
+  - job_name: file
+    file_sd_configs:
+    - files:
+      - '*.json'
+    relabel_configs:
+    - source_labels: [team]
+      regex: infra
+      action: keep  
+  - job_name: cmdb
+    http_sd_configs:
+      - url: http://localhost/prometheus-service-discovery
+  - job_name: consul
+    consul_sd_configs:
+    - server: 'localhost:8500'    
+  - job_name: ec2
+    ec2_sd_configs:
+    - region: <region>
+      access_key: <access key>
+      secret_key: <secret key>  
+  - job_name: file
+    file_sd_configs:
+    - files:
+    - '*.json'
+    relabel_configs:
+    - source_labels: [team]
+      regex: monitoring
+      replacement: monitor
+      target_label: team
+      action: replace
+  - job_name: file
+    file_sd_configs:
+    - files:
+    - '*.json'
+    relabel_configs:
+    - source_labels: [team]
+      regex: '(.*)ing'
+      replacement: '${1}'
+      target_label: team
+      action: replace
+  - job_name: file
+    file_sd_configs:
+    - files:
+    - '*.json'
+    relabel_configs:
+    - source_labels: []
+      regex: '(.*)'
+      replacement: '${1}'
+      target_label: team
+      action: replace
+  - job_name: consul
+    consul_sd_configs:
+    - server: 'localhost:8500'
+    relabel_configs:
+    - source_labels: [__meta_consul_address]
+      regex: '(.*)'
+      replacement: '${1}:9100'
+      target_label: __address__
+    - source_labels: [__meta_consul_node]
+      regex: '(.*)'
+      replacement: '${1}:9100'
+      target_label: instance
+
+
+
+
